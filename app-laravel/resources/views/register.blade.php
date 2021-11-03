@@ -19,7 +19,7 @@
         <input class="submit" type="submit" value="Register">
     </form>
 
-    <a class="login-link" href="<?php echo route("user.login", ["user" => $user])?>">Already got an account</a>
+    <a class="login-link" href="<?php echo route("user.login")?>">Already got an account</a>
 
 @endsection
 

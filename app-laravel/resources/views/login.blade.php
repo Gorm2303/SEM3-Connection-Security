@@ -3,7 +3,7 @@
 @section('content')
     <h1 class="login">Login</h1>
 
-    <form action="<?php echo route("user.check", ["user" => $user]) ?>" method="POST">
+    <form action="<?php echo route("user.check") ?>" method="POST">
         <?php echo csrf_field(); ?>
         Username:
         <input name="username" type="text" placeholder="Enter username here">

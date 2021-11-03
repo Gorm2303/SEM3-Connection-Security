@@ -1,11 +1,10 @@
-<!DOCTYPE html>
+<!doctype html>
 
-<head>
     <title>Connection security</title>
 
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="/style.css">
-</head>
+    <link rel="stylesheet" href="/css/style.css">
+
 <body>
-@yield('content')
+    @yield('content')
 </body>
