@@ -16,13 +16,6 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/', [MainController::class, "index"])->name("index");
 
-
-Route::get('/login', [UserController::class, "login"])->name("user.login");
-Route::get('/register', [UserController::class, "register"])->name("user.register");
-
-Route::post('/user/check', [UserController::class, "check"])->name("user.check");
-Route::post('/user/create', [UserController::class, "create"])->name("user.create");
-
-
+require __DIR__.'/auth.php';
 
 
