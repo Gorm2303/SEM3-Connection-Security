@@ -12,6 +12,7 @@
             <?php endforeach; ?>
         </ul>
         <?php endif; ?>
+
             Email:
             <input name="email" type="text" placeholder="Enter email here">
 

@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\MainController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +14,14 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', [MainController::class, "index"])->name("index");
+Route::get('/', [MainController::class, "index"])
+    ->middleware('guest')
+    ->name("index");
+
+Route::get('/settings', [SettingsController::class, 'index'])
+    ->middleware('auth')
+    ->name("settings");
+
 
 require __DIR__.'/auth.php';
 

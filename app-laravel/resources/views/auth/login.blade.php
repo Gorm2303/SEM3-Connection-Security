@@ -5,6 +5,14 @@
 
     <form action="<?php echo route("login") ?>" method="POST">
         <?php echo csrf_field(); ?>
+        <?php if($errors->any()): ?>
+        <ul>
+            <?php foreach($errors->all() as $error): ?>
+            <li><?php echo $error;?></li>
+            <?php endforeach; ?>
+        </ul>
+        <?php endif; ?>
+
         Email:
         <input name="email" type="text" placeholder="Enter email here">
 
