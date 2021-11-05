@@ -22,6 +22,6 @@
     </form>
 
     <a class="register-link" href="<?php echo route("register")?>">Register</a>
-    <a class="forgotpassword-link" href="<?php echo route("index")?>">Forgot password</a>
+    <a class="forgotpassword-link" href="<?php echo route("forgot-password")?>">Forgot password</a>
 @endsection
 

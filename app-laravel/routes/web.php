@@ -22,6 +22,9 @@ Route::get('/settings', [SettingsController::class, 'index'])
     ->middleware('auth')
     ->name("settings");
 
+Route::get('/forgot-password', function (){
+    return view('auth.forgot-password');})
+    ->name('forgot-password');
 
 require __DIR__.'/auth.php';
 
