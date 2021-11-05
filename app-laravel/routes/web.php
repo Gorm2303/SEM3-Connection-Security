@@ -22,6 +22,13 @@ Route::get('/settings', [SettingsController::class, 'index'])
     ->middleware('auth')
     ->name("settings");
 
+Route::get('/forgot-password', function (){
+    return view('auth.forgot-password');})
+    ->name('forgot-password');
+
+Route::post('/forgot-password', function (){
+    return redirect()->route('index')->with('success', 'Email send to '. request('email'));
+})->name('email');
 
 require __DIR__.'/auth.php';
 
