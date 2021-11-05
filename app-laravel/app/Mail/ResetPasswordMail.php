@@ -1,5 +1,5 @@
 <?php
-
+/*
 namespace App\Mail;
 use app\Providers;
 
@@ -18,6 +18,7 @@ class ResetPasswordMail extends Mailable
      *
      * @return void
      */
+/*
     public function __construct(Providers $providers)
     {
         $this->providers = $providers;
@@ -28,6 +29,7 @@ class ResetPasswordMail extends Mailable
      *
      * @return $this
      */
+/*
     public function build()
     {
         return $this->view('mails.mail');
@@ -36,3 +38,4 @@ class ResetPasswordMail extends Mailable
     ]);
     }
 }
+*/
