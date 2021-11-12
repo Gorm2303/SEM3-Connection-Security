@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,10 @@ Route::get('/forgot-password', function (){
 Route::post('/forgot-password', function (){
     return redirect()->route('index')->with('success', 'Email send to '. request('email'));
 })->name('email');
+
+Route::get('/sendbasicemail', [MailController::class, 'basic_email']);
+Route::get('/sendhtmlemail',[MailController::class, 'html_email']);
+
 
 require __DIR__.'/auth.php';
 
