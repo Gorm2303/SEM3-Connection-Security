@@ -27,7 +27,7 @@ Route::get('/forgot-password', function (){
     return view('auth.forgot-password');})
     ->name('forgot-password');
 
-Route::post('/forgot-password', [MailController::class, 'html_mail'])
+Route::post('/forgot-password', [MailController::class, 'html_email'])
     ->name('email');
 
 Route::get('/sendhtmlemail',[MailController::class, 'html_email']);
