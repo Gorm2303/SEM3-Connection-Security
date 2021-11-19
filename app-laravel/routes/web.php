@@ -28,9 +28,11 @@ Route::get('/forgot-password', function (){
     ->name('forgot-password');
 
 Route::post('/forgot-password', [MailController::class, 'html_email'])
-    ->name('email');
+    ->name('mail');
 
-Route::get('/sendhtmlemail',[MailController::class, 'html_email']);
+# Route::get('/email',[MailController::class, 'html_email']);
+Route::post('/mail', [MailController::class, 'html_email']);
+
 
 
 require __DIR__.'/auth.php';

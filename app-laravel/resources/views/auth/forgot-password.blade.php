@@ -3,11 +3,10 @@
 @section('content')
 
 
-    <form action="<?php echo route('email') ?>" method="post">
-        @csrf
-        <?php echo csrf_field() ?>
-        Email:
-        <input name="email" type="text" placeholder="Enter email here">
-        <input class="submit" type="submit" value="submit">
+    <form action="{{url('mail')}}" method="post">
+       @csrf
+         Email:
+        <input type="text" name="email" placeholder="Enter email here" />
+        <input type="submit" value="Submit">
     </form>
 @endsection
