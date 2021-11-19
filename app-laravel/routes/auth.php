@@ -30,6 +30,10 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->middleware('auth')
     ->name('logout');
 
+Route::post('/update', [RegisteredUserController::class, 'update'])
+    ->middleware('auth')
+    ->name('update');
+
 /*
 Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])
                 ->middleware('guest')
