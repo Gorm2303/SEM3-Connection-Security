@@ -3,7 +3,7 @@
 @section('content')
 
 
-    <form action="{{url('mail')}}" method="post">
+    <form action=""<?php echo route("password.email") ?>"" method="post">
        @csrf
          Email:
         <input type="text" name="email" placeholder="Enter email here" />
