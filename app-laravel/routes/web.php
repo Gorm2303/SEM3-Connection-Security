@@ -32,7 +32,7 @@ Route::get('/forgot-password', function () {
 
 
 #https://laravel.com/docs/8.x/passwords#password-reset-link-handling-the-form-submission
-Route::post('forgot-password', function (Request $request){
+Route::post('/forgot-password', function (Request $request){
     $request->validate(['email' => 'required|email']);
 
     $status = Password::sendResetLink(
