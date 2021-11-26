@@ -3,7 +3,7 @@
 @section('content')
 
 
-    <form action="<?php echo route("password.email") ?>" method="post">
+    <form action="<?php echo route("password-update", ['token' => $token]) ?>" method="post">
     @csrf
     Email:
     <input type="text" name="email" placeholder="Enter your email here" />
