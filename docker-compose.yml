@@ -1,18 +1,17 @@
 version: '3'
 
 services:
-  mariadb:
-    image: bitnami/mariadb:latest
-    environment:
-      - MARIADB_USER=my_user
-      - MARIADB_DATABASE=my_database
-      - MARIADB_PASSWORD=my_password
-      - ALLOW_EMPTY_PASSWORD=yes
-    networks:
-      - backend
+  login-service:
+    tty: true
+    image: bitnami/laravel:latest
+    depends_on:
+      - user-management-service
+    ports:
+      - 3000:3000
+    volumes:
+      - ./login-service:/app
 
-
-  myapp:
+  user-management-service:
     tty: true
     image: bitnami/laravel:latest
     environment:
@@ -22,11 +21,18 @@ services:
       - DB_PASSWORD=my_password
     depends_on:
       - mariadb
-    ports:
-      - 3000:3000
     volumes:
-      - ./:/app
+      - ./user-management-service:/app
 
+  mariadb:
+    image: bitnami/mariadb:latest
+    environment:
+      - MARIADB_USER=my_user
+      - MARIADB_DATABASE=my_database
+      - MARIADB_PASSWORD=my_password
+      - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+      - backend
 
 networks:
   backend:
