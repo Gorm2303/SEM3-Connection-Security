@@ -30,6 +30,14 @@ COPY --chown=www:www . /var/www/user-management-service
 # Change current user to www
 USER www
 
+# Composer install
+#RUN composer install
+#RUN composer update --no-scripts
+#RUN composer dump-autoload
+
+# Set /storage /public permission to public
+#RUN chmod -R 777 storage/ public/
+
 # Expose port 9000 and start php-fpm server
 EXPOSE 9090
 CMD ["php-fpm"]
