@@ -4,12 +4,10 @@ services:
   login-service:
     tty: true
     image: bitnami/laravel:latest
-    depends_on:
-      - user-management-service
-    ports:
-      - 3000:3000
     volumes:
       - ./login-service:/app
+    networks:
+    - frontnet     
 
   user-management-service:
     tty: true
@@ -17,23 +15,26 @@ services:
     environment:
       - DB_HOST=mariadb
       - DB_USERNAME=my_user
-      - DB_DATABASE=my_database
+      - DB_DATABASE=connection_security
       - DB_PASSWORD=my_password
     depends_on:
       - mariadb
     volumes:
       - ./user-management-service:/app
+    networks:
+      - frontnet
+      - backnet
 
   mariadb:
     image: bitnami/mariadb:latest
     environment:
       - MARIADB_USER=my_user
-      - MARIADB_DATABASE=my_database
+      - MARIADB_DATABASE=connection_security
       - MARIADB_PASSWORD=my_password
       - ALLOW_EMPTY_PASSWORD=yes
     networks:
-      - backend
+      - backnet
 
 networks:
-  backend:
-    driver: host
+  backnet:
+  frontnet:
