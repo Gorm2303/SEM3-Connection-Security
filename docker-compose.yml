@@ -24,6 +24,9 @@ services:
       context: login-service
       dockerfile: Dockerfile
     container_name: login-service
+    depends_on:
+      - webserver
+      - mysql
     tty: true
     environment:
       SERVICE_NAME: login-service
@@ -32,6 +35,8 @@ services:
     volumes:
       - ./login-service:/var/www/login-service
       - ./login-service/docker-entrypoint.sh:/docker-entrypoint.d/docker-entrypoint.sh
+      - ./local.ini:/usr/local/etc/php/conf.d/local.ini
+    #entrypoint: sh -c "sleep 30 && php /var/www/html/artisan migrate"
     networks:
       - app-network
   
@@ -40,13 +45,17 @@ services:
       context: lumen
       dockerfile: Dockerfile
     container_name: user-management-service
+    depends_on:
+      - webserver
+      - mysql
     tty: true
     environment:
       SERVICE_NAME: user-management-service
       SERVICE_TAGS: dev
     working_dir: /var/www/user-management-service
     volumes:
-      - ./user-management-service:/var/www/user-management-service    
+      - ./user-management-service:/var/www/user-management-service
+      - ./local.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
       - app-network
 
@@ -60,13 +69,13 @@ services:
       - "3306:3306"
     environment:
       MYSQL_DATABASE: connection_security
-      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: root
       SERVICE_NAME: mysql
       SERVICE_TAGS: dev
     networks:
       - app-network
-    volumes:
-      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    #volumes:
+    #  - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
 
 networks:
   app-network:
