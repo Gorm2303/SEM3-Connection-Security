@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  webserver:
+  nginx:
     image: nginx:alpine
     container_name: nginx
     restart: unless-stopped
@@ -12,9 +12,10 @@ services:
     volumes:
       - ./login-service:/var/www/login-service
       - ./user-management-service:/var/www/user-management-service
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/sites/:/etc/nginx/conf.d/
-      - ./nginx/ssl/:/etc/ssl/
+      - ./nginx/nginx-new.conf:/etc/nginx/nginx.conf
+      - ./nginx/sites/login-service.conf:/etc/nginx/conf.d/login-service.conf
+      #- ./nginx/sites/:/etc/nginx/conf.d/
+      - ./nginx/ssl/:/etc/nginx/certs/
       - ./nginx/docker-entrypoint.sh:/docker-entrypoint.d/docker-entrypoint.sh
     networks:
       - app-network
@@ -28,36 +29,25 @@ services:
       - webserver
       - mysql
     tty: true
-    environment:
-      SERVICE_NAME: login-service
-      SERVICE_TAGS: dev
-    working_dir: /var/www/login-service
     volumes:
-      - ./login-service:/var/www/login-service
-      - ./login-service/docker-entrypoint.sh:/docker-entrypoint.d/docker-entrypoint.sh
       - ./local.ini:/usr/local/etc/php/conf.d/local.ini
-    #entrypoint: sh -c "sleep 30 && php /var/www/html/artisan migrate"
     networks:
       - app-network
   
-  user-management-service:
-    build:
-      context: lumen
-      dockerfile: Dockerfile
-    container_name: user-management-service
-    depends_on:
-      - webserver
-      - mysql
-    tty: true
-    environment:
-      SERVICE_NAME: user-management-service
-      SERVICE_TAGS: dev
-    working_dir: /var/www/user-management-service
-    volumes:
-      - ./user-management-service:/var/www/user-management-service
-      - ./local.ini:/usr/local/etc/php/conf.d/local.ini
-    networks:
-      - app-network
+  #user-management-service:
+   ## build:
+   #   context: user-management-service
+    #  dockerfile: Dockerfile
+   # container_name: user-management-service
+  #  depends_on:
+     # - webserver
+    #  - mysql
+   # tty: true
+  #  volumes:
+     # - ./user-management-service/docker-entrypoint.sh:/docker-entrypoint.d/docker-entrypoint.sh
+    #  - ./local.ini:/usr/local/etc/php/conf.d/local.ini
+   # networks:
+  #    - app-network
 
   mysql:
     image: mysql:latest
@@ -65,17 +55,11 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     restart: unless-stopped
     tty: true
-    ports:
-      - "3306:3306"
     environment:
       MYSQL_DATABASE: connection_security
-      MYSQL_ROOT_PASSWORD: root
-      SERVICE_NAME: mysql
-      SERVICE_TAGS: dev
+      MYSQL_ROOT_PASSWORD: secret
     networks:
       - app-network
-    #volumes:
-    #  - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
 
 networks:
   app-network:

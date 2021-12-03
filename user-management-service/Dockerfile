@@ -28,7 +28,6 @@ COPY . /var/www/user-management-service
 COPY --chown=www:www . /var/www/user-management-service
 
 # Change current user to www
-USER www
 
 # Composer install
 #RUN composer install
