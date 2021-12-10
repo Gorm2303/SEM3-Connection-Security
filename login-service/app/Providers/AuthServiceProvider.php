@@ -25,9 +25,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        ResetPassword::createUrlUsing(function ($user, string $token) {
-            return 'https://SE_S3_CS.com/reset-password?token='.$token;
-        });
     }
 }
