@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
@@ -28,56 +29,23 @@ Route::get('/settings', [SettingsController::class, 'index'])
     ->middleware('auth')
     ->name("settings");
 
-Route::get('/forgot-password', function () {
-    return view('auth.forgot-password');})
+
+Route::get('/forgot-password', [MailController::class, 'index'])
     ->middleware('guest')
     ->name('password.request');
 
-
 #https://laravel.com/docs/8.x/passwords#password-reset-link-handling-the-form-submission
-Route::post('/forgot-password', function (Request $request){
-    $request->validate(['email' => 'required|email']);
+Route::post('/forgot-password', [MailController::class, 'send'])
+    ->middleware('guest')
+    ->name('password.email');
 
-    $status = Password::sendResetLink(
-        $request->only('email')
-    );
+Route::get('/reset-password/{token}', [MailController::class, 'create'])
+    ->middleware('guest')
+    ->name('password.reset');
 
-    return $status === Password::RESET_LINK_SENT
-                ? back()->with(['status' => __($status)])
-                : back()->withErrors(['email' => __($status)]);
-
-})->middleware('guest')->name('password.email');
-
-Route::get('/reset-password/{token}', function($token){
-    return view('auth.reset-password', ['token' => $token]);
-})->middleware('guest')->name('password.reset');
-
-Route::post('reset-password', function (Request $request) {
-    $request->validate([
-        'token'     => 'required',
-        'email'     => 'required|email',
-        'password'  => 'required|min:8|confirmed'
-    ]);
-
-    $status = Password::reset(
-        $request->only('email', 'password', 'password_confirmation', 'token'),
-        function ($user, $password) {
-            $user->forceFill([
-                'password' => Hash::make($password)
-            ])->setRememberToken(Str::random(60));
-
-            $user->save();
-
-            event(new PasswordReset($user));
-        }
-    );
-
-    return $status === Password::PASSWORD_RESET
-        ? redirect()->route('index')->with('status', __($status))
-        : back()->withErrors(['email' => [__($status)]]);
-})->middleware('guest')->name('password-update');
-
-
+Route::post('reset-password', [MailController::class, 'update'])
+    ->middleware('guest')
+    ->name('password-update');
 
 
 require __DIR__.'/auth.php';
