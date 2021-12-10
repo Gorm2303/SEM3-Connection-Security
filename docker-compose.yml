@@ -11,10 +11,8 @@ services:
       - "443:443"
     volumes:
       - ./login-service:/var/www/login-service
-      - ./user-management-service:/var/www/user-management-service
       - ./nginx/nginx-new.conf:/etc/nginx/nginx.conf
       - ./nginx/sites/login-service.conf:/etc/nginx/conf.d/login-service.conf
-      #- ./nginx/sites/:/etc/nginx/conf.d/
       - ./nginx/ssl/:/etc/nginx/certs/
       - ./nginx/docker-entrypoint.sh:/docker-entrypoint.d/docker-entrypoint.sh
     networks:
@@ -29,25 +27,8 @@ services:
       - webserver
       - mysql
     tty: true
-    volumes:
-      - ./local.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
       - app-network
-  
-  #user-management-service:
-   ## build:
-   #   context: user-management-service
-    #  dockerfile: Dockerfile
-   # container_name: user-management-service
-  #  depends_on:
-     # - webserver
-    #  - mysql
-   # tty: true
-  #  volumes:
-     # - ./user-management-service/docker-entrypoint.sh:/docker-entrypoint.d/docker-entrypoint.sh
-    #  - ./local.ini:/usr/local/etc/php/conf.d/local.ini
-   # networks:
-  #    - app-network
 
   mysql:
     image: mysql:latest
