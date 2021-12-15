@@ -16,7 +16,7 @@ services:
       - ./nginx/ssl/:/etc/nginx/certs/
       - ./nginx/docker-entrypoint.sh:/docker-entrypoint.d/docker-entrypoint.sh
     networks:
-      - app-network
+      - frontnet
   
   login-service:
     build:
@@ -28,7 +28,8 @@ services:
       - mysql
     tty: true
     networks:
-      - app-network
+      - frontnet
+      - backnet
 
   mysql:
     image: mysql:latest
@@ -40,8 +41,10 @@ services:
       MYSQL_DATABASE: connection_security
       MYSQL_ROOT_PASSWORD: secret
     networks:
-      - app-network
+      - backnet
 
 networks:
-  app-network:
-    driver: bridge
+  frontnet:
+  backnet:
+
+  
