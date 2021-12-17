@@ -4,12 +4,6 @@ use App\Http\Controllers\MailController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Http\Request;
-use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +28,6 @@ Route::get('/forgot-password', [MailController::class, 'index'])
     ->middleware('guest')
     ->name('password.request');
 
-#https://laravel.com/docs/8.x/passwords#password-reset-link-handling-the-form-submission
 Route::post('/forgot-password', [MailController::class, 'send'])
     ->middleware('guest')
     ->name('password.email');
